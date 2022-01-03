@@ -28,8 +28,10 @@ const userDelete = (req, res)=> {
 } 
 
 const userPut = (req, res)=> {
+    const { id } = req.params;
     res.json({
-        msg:'put API'
+        msg:'put API',
+        id
     })
 } 
 
