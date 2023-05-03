@@ -29,7 +29,7 @@ router.put('/:id', [
         textFieldsValidation,
 ], userPut);
 
-router.delete('/', userDelete)
+router.delete('/:id', userDelete)
 
 router.patch('/', userPatch)
 
