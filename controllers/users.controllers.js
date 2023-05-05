@@ -44,7 +44,7 @@ const userDelete = async (req, res) => {
 
 const userPut = async (req, res) => {
     const { id } = req.params;
-    const { _id, password, google, correo, ...rest } = req.body;
+    const { google, correo, ...rest } = req.body;
 
     if (password) {
         //Encriptar contraseña

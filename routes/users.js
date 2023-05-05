@@ -5,9 +5,10 @@ const { userPatch,
         userPut } = require('../controllers/users.controllers');
 const { Router } = require('express');
 const router = Router();
-const { rolValidator, emailExist, userIdExist } = require('../helpers/db-validators');
 const { check } = require('express-validator');
+const { rolValidator, emailExist, userIdExist } = require('../helpers/db-validators');
 const { textFieldsValidation } = require('../middleware/textFieldsValidation');
+const { jwtValidator } = require('../middleware/JWTValidator');
 
 
 router.get('/', userGet);
@@ -29,8 +30,13 @@ router.put('/:id', [
         textFieldsValidation,
 ], userPut);
 
-router.delete('/:id', userDelete)
+router.delete('/:id', [
+        jwtValidator,
+        check('id', 'No es un ID de Mongo valido!').isMongoId(),
+        check('id').custom(userIdExist),
+], userDelete)
 
 router.patch('/', userPatch)
+
 
 module.exports = router;
