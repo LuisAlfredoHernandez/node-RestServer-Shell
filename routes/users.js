@@ -8,7 +8,9 @@ const router = Router();
 const { check } = require('express-validator');
 const { rolValidator, emailExist, userIdExist } = require('../helpers/db-validators');
 const { textFieldsValidation } = require('../middleware/textFieldsValidation');
+const { isAdminRole, hasRole } = require('../middleware/verifyUserRole');
 const { jwtValidator } = require('../middleware/JWTValidator');
+
 
 
 router.get('/', userGet);
@@ -32,6 +34,8 @@ router.put('/:id', [
 
 router.delete('/:id', [
         jwtValidator,
+        isAdminRole,
+        hasRole('ADMIN_ROLE', 'USER_ROLE'),
         check('id', 'No es un ID de Mongo valido!').isMongoId(),
         check('id').custom(userIdExist),
 ], userDelete)

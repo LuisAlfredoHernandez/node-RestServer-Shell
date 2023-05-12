@@ -29,7 +29,7 @@ const login = async (req, res = response) => {
             })
         }
         //Generate Json Web Token
-        const token = await generateJwT()
+        const token = await generateJwT(usuario.id)
         
         res.json({
             usuario,
