@@ -7,10 +7,7 @@ const { Router } = require('express');
 const router = Router();
 const { check } = require('express-validator');
 const { rolValidator, emailExist, userIdExist } = require('../helpers/db-validators');
-const { textFieldsValidation } = require('../middleware/textFieldsValidation');
-const { isAdminRole, hasRole } = require('../middleware/verifyUserRole');
-const { jwtValidator } = require('../middleware/JWTValidator');
-
+const {textFieldsValidation, isAdminRole, hasRole, jwtValidator } = require('../middleware');
 
 
 router.get('/', userGet);
