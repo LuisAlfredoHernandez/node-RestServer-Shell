@@ -6,7 +6,6 @@ const dbConnection = async () => {
         await mongoose.connect(process.env.MONGODB_CNN, {
             useNewUrlParser: true,
             useUnifiedTopology: true,
-        
         });
         console.log('Base de datos en linea')
     } catch (error) {
