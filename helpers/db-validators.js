@@ -1,6 +1,6 @@
-const { Categoria } = require('../models');
+const { Categoria, Usuario } = require('../models');
 const Role = require('../models/rol');
-const Usuario = require('../models/usuario');
+
 
 const rolValidator = async (rol = '') => {
     const existeRol = await Role.findOne({ rol })
@@ -31,9 +31,9 @@ const categoryIdExist = async (id) => {
     }
 }
 
-const categoryNameExist = async (name) => {
-    const existCategoryName = await Categoria.findOne({ name })
-    if (!existCategoryName) {
+const categoryNameExist = async (nombre) => {
+    const existCategoryName = await Categoria.findOne({ nombre })
+    if (existCategoryName) {
         throw new Error(`La Categoria con el nombre: ${nombre}, ya existe en la Base de Datos!`)
     }
 }
