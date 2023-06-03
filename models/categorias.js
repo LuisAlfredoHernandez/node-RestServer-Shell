@@ -4,7 +4,7 @@ const CategoriaSchema = Schema({
     nombre: {
         type: String,
         required: [true, 'El nombre es obligatorio!'],
-        
+        unique:true
     },
     estado: {
         type: Boolean,
@@ -18,4 +18,8 @@ const CategoriaSchema = Schema({
     }
 })
 
+CategoriaSchema.methods.toJSON = function () {
+    const { estado, __v, ...categoria } = this.toObject();
+    return categoria;
+}
 module.exports = model('Categoria', CategoriaSchema)
