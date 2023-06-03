@@ -7,7 +7,7 @@ const getCategories = async (req, res = response) => {
     const query = { estado: true }
     const [categorias, total] = await Promise.all([
         Categoria.find(query)
-            .populate('usuario')
+            .populate('usuario', 'nombre')
             .skip(desde)
             .limit(limite),
         Categoria.countDocuments(query)
@@ -20,7 +20,7 @@ const getCategories = async (req, res = response) => {
 
 const getCategoryById = async (req, res = response) => {
     const id = req.params.id;
-    const categoryDB = await Categoria.findById(id).populate('usuario')
+    const categoryDB = await Categoria.findById(id).populate('usuario', 'nombre')
     res.status(201).json(categoryDB)
 }
 
@@ -37,16 +37,17 @@ const createCategory = async (req, res = response) => {
 
 const updateCategory = async (req, res = response) => {
     const { nombre } = req.body;
+    nombre = nombre.toUpperCase();
     const id = req.params.id;
-    const newCategoryName = await Categoria.findByIdAndUpdate(id, { nombre })
+    const newCategoryName = await Categoria.findByIdAndUpdate(id, { nombre }, { new: true })
     res.status(201).json({
         newCategoryName
     })
 }
 
 const deleteCategory = async (req, res = response) => {
-    const categoryId = req.params.id;
-    const newCategoryStatus = await Categoria.findByIdAndUpdate(categoryId, { estado: false })
+    const id = req.params.id;
+    const newCategoryStatus = await Categoria.findByIdAndUpdate(id, { estado: false }, { new: true })
     res.status(201).json({
         newCategoryStatus
     })
