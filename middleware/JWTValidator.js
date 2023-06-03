@@ -6,7 +6,7 @@ const jwtValidator = async (req = request, res = response, next) => {
     const token = req.header('Api-key')
     if (!token) {
         return res.status(401).json({
-            msg: 'El usuario no esta autorizado!'
+            msg: 'El usuario no esta autorizado! - JWT'
         })
     } else {
         try {

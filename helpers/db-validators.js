@@ -1,3 +1,4 @@
+const { Categoria } = require('../models');
 const Role = require('../models/rol');
 const Usuario = require('../models/usuario');
 
@@ -16,15 +17,31 @@ const emailExist = async (correo = '') => {
 }
 
 const userIdExist = async (id) => {
-    const existUserId = await Usuario.findById( id )
+    const existUserId = await Usuario.findById(id)
     if (!existUserId) {
         throw new Error(`El Id: ${id} no existe!`)
     }
 
 }
 
+const categoryIdExist = async (id) => {
+    const existCategoryId = await Categoria.findById(id)
+    if (!existCategoryId) {
+        throw new Error(`La Categoria con el ID: ${id} no existe en la BD!`)
+    }
+}
+
+const categoryNameExist = async (name) => {
+    const existCategoryName = await Categoria.findOne({ name })
+    if (!existCategoryName) {
+        throw new Error(`La Categoria con el nombre: ${nombre}, ya existe en la Base de Datos!`)
+    }
+}
+
 module.exports = {
     rolValidator,
     emailExist,
-    userIdExist
+    userIdExist,
+    categoryIdExist,
+    categoryNameExist
 }
