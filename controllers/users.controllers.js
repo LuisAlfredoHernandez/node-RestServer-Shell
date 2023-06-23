@@ -34,24 +34,24 @@ const userPost = async (req, res) => {
     })
 }
 
-const userDelete = async (req, res) => {
+const userDelete = async (req, res = response) => {
     const { id } = req.params
     const usuario = await Usuario.findByIdAndUpdate(id, { estado: false })
+    const usuarioAutenticado = req.usuario;
     res.json({
-        usuario
+        usuario,
+        usuarioAutenticado
     })
 }
 
 const userPut = async (req, res) => {
     const { id } = req.params;
-    const { _id, password, google, correo, ...rest } = req.body;
-
+    const { google, correo, ...rest } = req.body;
     if (password) {
         //Encriptar contraseña
         const salt = bcryptjs.genSaltSync()
         rest.password = bcryptjs.hashSync(password, salt)
     }
-
     const usuario = await Usuario.findByIdAndUpdate(id, rest)
 
     res.json({
