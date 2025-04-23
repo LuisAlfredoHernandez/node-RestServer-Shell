@@ -1,46 +1,46 @@
-const express = require('express');
-const cors = require('cors');
-const { dbConnection } = require('../database/config.database')
+const express = require("express");
+const cors = require("cors");
+const { dbConnection } = require("../database/config.database");
 
 class Server {
+  constructor() {
+    this.app = express();
+    this.port = process.env.PORT || 8080;
+    this.path = {
+      auth: "/api/auth",
+      search: "/api/search",
+      categories: "/api/categories",
+      users: "/api/users",
+      products: "/api/products",
+    };
+    this.conectarDB();
+    this.middleware();
+    this.routes();
+  }
 
-    constructor() {
-        this.app = express();
-        this.port = process.env.PORT || 8080;
-        this.path = {
-            auth: '/api/auth',
-            categories: '/api/categories',
-            users: '/api/users',
-        }
-        this.conectarDB();
-        this.middleware();
-        this.routes();
+  async conectarDB() {
+    dbConnection();
+  }
 
-    }
+  middleware() {
+    this.app.use(cors());
+    this.app.use(express.static("public"));
+    this.app.use(express.json());
+  }
 
-    async conectarDB() {
-        dbConnection();
-    }
+  routes() {
+    this.app.use(this.path.auth, require("../routes/auth"));
+    this.app.use(this.path.search, require("../routes/search"));
+    this.app.use(this.path.categories, require("../routes/categories"));
+    this.app.use(this.path.users, require("../routes/users"));
+    this.app.use(this.path.products, require("../routes/products"));
+  }
 
-    middleware() {
-        this.app.use(cors());
-        this.app.use(express.static('public'));
-        this.app.use(express.json());
-    }
-
-    routes() {
-        this.app.use(this.path.auth, require('../routes/auth'));
-        this.app.use(this.path.categories, require('../routes/categories'));
-        this.app.use(this.path.users, require('../routes/users'));
-    }
-
-    listen() {
-        this.app.listen(this.port, () => {
-            console.log(this.port)
-        })
-    }
-
+  listen() {
+    this.app.listen(this.port, () => {
+      console.log(this.port);
+    });
+  }
 }
 
 module.exports = Server;
-

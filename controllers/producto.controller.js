@@ -1,5 +1,5 @@
 const { response } = require("express");
-const { Categoria } = require("../models");
+const {} = require("../models");
 
 const getProducts = async (req, res = response) => {
   const { limite, desde } = req.query;
@@ -61,9 +61,9 @@ const deleteProducts = async (req, res = response) => {
 };
 
 module.exports = {
-  createCategory,
-  getCategories,
-  getCategoryById,
-  updateCategory,
-  deleteCategory,
+  createProducts,
+  getProducts,
+  getProductsById,
+  updateProducts,
+  deleteProducts,
 };
